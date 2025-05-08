@@ -1,10 +1,19 @@
-class LinkedList
-{
-    Node *START;
+#include <iostream>
+#include <cstddef>  // Untuk NULL
+
+using namespace std;
+
+class Node {
+public:
+    int noMhs;
+    Node* next;
+};
+
+class LinkedList {
+    Node* START;
 
 public:
-    LinkedList()
-    {
+    LinkedList() {
         START = NULL;
     }
 
@@ -13,13 +22,11 @@ public:
         cout << "\nMasukkan Nomor Mahasiswa: ";
         cin >> nim;
 
-        Node *nodeBaru = new Node;
+        Node* nodeBaru = new Node;
         nodeBaru->noMhs = nim;
 
-        if (START == NULL || nim <= START->noMhs)
-        {
-            if ((START != NULL) && (nim == START->noMhs))
-            {
+        if (START == NULL || nim <= START->noMhs) {
+            if ((START != NULL) && (nim == START->noMhs)) {
                 cout << "\nDuplikasi noMhs tidak diijinkan\n";
                 return;
             }
@@ -27,13 +34,12 @@ public:
             START = nodeBaru;
             return;
         }
-        Node *previous = START;
-        Node *current = START;
 
-        while ((current != NULL) && (nim >= current->noMhs))
-        {
-            if (nim == current->noMhs)
-            {
+        Node* previous = START;
+        Node* current = START;
+
+        while ((current != NULL) && (nim >= current->noMhs)) {
+            if (nim == current->noMhs) {
                 cout << "\nDuplikasi noMhs tidak diijinkan\n";
                 return;
             }
@@ -45,27 +51,23 @@ public:
         previous->next = nodeBaru;
     }
 
-    bool listEmpty()
-    {
+    bool listEmpty() {
         return (START == NULL);
     }
 
-    bool Search(int nim, Node *&previous, Node *&current)
-    {
-        *previous = START;
-        *current = START;
+    bool Search(int nim, Node*& previous, Node*& current) {
+        previous = START;
+        current = START;
 
-        while ((current != NULL) && (nim != (*current)->noMhs))
-        {
-            *previous = *current;
-            *current = (*current)->next;
+        while ((current != NULL) && (nim != current->noMhs)) {
+            previous = current;
+            current = current->next;
         }
-        return (*current != NULL);
+        return (current != NULL);
     }
 
-    bool delNode(int nim)
-    {
-        Node *current, *previous;
+    bool delNode(int nim) {
+        Node* current, * previous;
         if (!Search(nim, previous, current))
             return false;
 
@@ -78,18 +80,13 @@ public:
         return true;
     }
 
-    void traverse()
-    {
-        if (listEmpty())
-        {
+    void traverse() {
+        if (listEmpty()) {
             cout << "\nList Kosong\n";
-        }
-        else
-        {
+        } else {
             cout << "\nData di dalam list adalah:\n";
-            Node *currentNode = START;
-            while (currentNode != NULL)
-            {
+            Node* currentNode = START;
+            while (currentNode != NULL) {
                 cout << currentNode->noMhs << endl;
                 currentNode = currentNode->next;
             }
@@ -97,10 +94,12 @@ public:
         }
     }
 };
+
 int main() {
     LinkedList mhs;
     int nim;
     char ch;
+
     do {
         cout << "\nMenu";
         cout << "\n1. Menambahkan data ke dalam list";
@@ -110,6 +109,7 @@ int main() {
         cout << "\n5. Keluar";
         cout << "\nMasukkan pilihan (1-5): ";
         cin >> ch;
+
         switch (ch) {
             case '1':
                 mhs.addNode();
@@ -129,14 +129,14 @@ int main() {
                     cout << "\nData tidak ditemukan" << endl;
                 break;
             case '4': {
-                if (mhs.listEmpty() == true) {
+                if (mhs.listEmpty()) {
                     cout << "\nList Kosong\n";
                     break;
                 }
-                Node *previous, *current;
+                Node* previous, * current;
                 cout << "\nMasukkan nim mahasiswa yang dicari : ";
                 cin >> nim;
-                if (mhs.Search(nim, previous, current) == false)
+                if (!mhs.Search(nim, previous, current))
                     cout << "\nData tidak ditemukan\n";
                 else {
                     cout << "\nData ditemukan\n";
@@ -149,6 +149,6 @@ int main() {
             default:
                 cout << "\nPilihan salah!\n";
                 break;
-            }
-        } while (ch != '5');
-    }
+        }
+    } while (ch != '5');
+}
