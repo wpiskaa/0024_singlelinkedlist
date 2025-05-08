@@ -97,3 +97,58 @@ public:
         }
     }
 };
+int main() {
+    LinkedList mhs;
+    int nim;
+    char ch;
+    do {
+        cout << "\nMenu";
+        cout << "\n1. Menambahkan data ke dalam list";
+        cout << "\n2. Menampilkan semua data di list";
+        cout << "\n3. Menghapus data berdasarkan nim";
+        cout << "\n4. Mencari data dalam list";
+        cout << "\n5. Keluar";
+        cout << "\nMasukkan pilihan (1-5): ";
+        cin >> ch;
+        switch (ch) {
+            case '1':
+                mhs.addNode();
+                break;
+            case '2':
+                if (mhs.listEmpty())
+                    cout << "\nList Kosong" << endl;
+                else
+                    mhs.traverse();
+                break;
+            case '3':
+                cout << "\nMasukkan nim mahasiswa yang akan dihapus : ";
+                cin >> nim;
+                if (mhs.delNode(nim))
+                    cout << "\nData dengan nomor mahasiswa " << nim << " berhasil dihapus" << endl;
+                else
+                    cout << "\nData tidak ditemukan" << endl;
+                break;
+            case '4': {
+                if (mhs.listEmpty() == true) {
+                    cout << "\nList Kosong\n";
+                    break;
+                }
+                Node *previous, *current;
+                cout << "\nMasukkan nim mahasiswa yang dicari : ";
+                cin >> nim;
+                if (mhs.Search(nim, previous, current) == false)
+                    cout << "\nData tidak ditemukan\n";
+                else {
+                    cout << "\nData ditemukan\n";
+                    cout << "\nNIM Mahasiswa : " << current->noMhs << endl;
+                }
+                break;
+            }
+            case '5':
+                break;
+            default:
+                cout << "\nPilihan salah!\n";
+                break;
+            }
+        } while (ch != '5');
+    }
